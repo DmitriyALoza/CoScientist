@@ -1,0 +1,11 @@
+{
+  "id": "eln_008",
+  "prompt": "Create ELN documentation for a co-immunoprecipitation (Co-IP) experiment. We investigated the interaction between endogenous p53 and MDM2 in U2OS cells under DNA damage conditions. DNA damage induced by 1 µM doxorubicin (Sigma-Aldrich D1515, lot SLBV6403) for 6 hours. Lysis: NP-40 buffer. IP antibody: anti-p53 (Santa Cruz sc-126, lot J2922, 4 µg/500 µg lysate) or IgG isotype control (Santa Cruz sc-2025). Protein G agarose beads (Roche 11719416001). Western detection: anti-MDM2 (Abcam ab16895, 1:500) and anti-p53 (CST 2527S, 1:1000). Input control: 10% of lysate. Expected: MDM2 co-IP with p53 enriched in doxorubicin condition.",
+  "domain": "biochemistry",
+  "grader": "eln_grader",
+  "gold": {
+    "required_sections": ["objective", "hypothesis", "samples", "reagents", "parameters", "controls", "deviations", "results", "citations"],
+    "required_reagent_fields": ["vendor", "catalog", "lot", "concentration"],
+    "min_score": 60
+  }
+}

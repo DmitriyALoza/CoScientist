@@ -1,0 +1,12 @@
+{
+  "id": "eln_003",
+  "prompt": "Create an ELN entry for a cell viability assay. We treated HeLa cells (ATCC CCL-2, passage 12) with compound X (Sigma-Aldrich SML1263, lot SLCC4812) at concentrations 0.1, 1, 10, 100 µM in DMSO vehicle (0.1% final). Vehicle control: 0.1% DMSO. Positive control: 10 µM staurosporine. Cells were plated at 5×10^3 cells/well in 96-well plates, treated for 24 hours. Viability measured by CellTiter-Glo luminescent assay (Promega G7572, lot 0000424476). Objective: determine IC50 of compound X in HeLa cells. Hypothesis: IC50 < 10 µM based on prior HTS data.",
+  "domain": "cell_culture",
+  "grader": "eln_grader",
+  "gold": {
+    "required_sections": ["objective", "hypothesis", "samples", "reagents", "parameters", "controls", "deviations", "results", "citations"],
+    "required_reagent_fields": ["vendor", "catalog", "lot", "concentration"],
+    "expected_controls": ["Vehicle/DMSO", "Positive staurosporine", "Untreated"],
+    "min_score": 60
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "ts_004",
+  "prompt": "My qRT-PCR results have unusually high CT values (>35) for my reference gene GAPDH across all samples, while my target gene has normal CT values around 25. RNA quality looks fine (RIN > 8). This is a TaqMan assay. What might explain this discrepancy?",
+  "domain": "molecular_biology",
+  "grader": "llm_judge",
+  "gold": {
+    "expected_root_causes": [
+      "GAPDH assay degraded or wrong probe",
+      "Genomic DNA contamination inflating target signal",
+      "Primer-dimer in GAPDH reaction",
+      "Different RNA input amounts (quantification error)",
+      "RNA inhibition of GAPDH-specific reaction",
+      "Wrong assay ID ordered"
+    ],
+    "must_mention_controls": true,
+    "must_rank_hypotheses": true,
+    "must_suggest_next_steps": true
+  }
+}

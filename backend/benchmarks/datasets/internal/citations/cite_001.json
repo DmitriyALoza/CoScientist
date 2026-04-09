@@ -1,0 +1,11 @@
+{
+  "id": "cite_001",
+  "prompt": "Find and cite 3 papers about CRISPR-Cas9 off-target effects and how to minimize them.",
+  "domain": "genomics",
+  "grader": "citation_grader",
+  "gold": {
+    "min_citations": 2,
+    "required_fields_per_citation": ["title", "authors", "year", "excerpt", "source_id"],
+    "topic_keywords": ["CRISPR", "off-target", "specificity", "guide RNA"]
+  }
+}

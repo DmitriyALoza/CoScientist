@@ -1,0 +1,11 @@
+{
+  "id": "eln_007",
+  "prompt": "Document a qRT-PCR gene expression experiment. We measured VEGFA mRNA expression in HIF1α-stabilised hypoxic HCT116 colorectal cancer cells. Cells cultured in 0.5% O2 hypoxia for 24h vs normoxia (21% O2) controls. RNA extraction: RNeasy Mini Kit (Qiagen 74104, lot 163044162). cDNA synthesis: SuperScript III (ThermoFisher 18080044, lot 2395729, 1 µg RNA input). qPCR: TaqMan assay Hs00900055_m1 (VEGFA) and Hs02800695_m1 (HPRT1 housekeeping), QuantStudio 7 Flex, n=3 biological replicates. Primers: TaqMan predesigned (Applied Biosystems). Expected: 3-5 fold VEGFA upregulation in hypoxia.",
+  "domain": "molecular_biology",
+  "grader": "eln_grader",
+  "gold": {
+    "required_sections": ["objective", "hypothesis", "samples", "reagents", "parameters", "controls", "deviations", "results", "citations"],
+    "required_reagent_fields": ["vendor", "catalog", "lot", "concentration"],
+    "min_score": 60
+  }
+}

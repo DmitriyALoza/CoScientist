@@ -1,0 +1,20 @@
+{
+  "id": "ctrl_002",
+  "prompt": "What controls do I need for an IHC experiment to detect phospho-ERK1/2 in FFPE breast cancer tissue sections? I'm using a rabbit monoclonal primary antibody and an HRP-conjugated secondary.",
+  "domain": "ihc",
+  "grader": "controls_grader",
+  "gold": {
+    "required_controls": [
+      "Primary antibody omission control",
+      "Isotype control",
+      "Positive tissue control",
+      "Secondary-only control",
+      "Autofluorescence control"
+    ],
+    "optional_controls": [
+      "Absorption control",
+      "Biological replicates",
+      "Negative tissue control"
+    ]
+  }
+}

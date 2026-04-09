@@ -1,0 +1,21 @@
+{
+  "id": "ctrl_004",
+  "prompt": "Generate controls checklist for a confocal microscopy imaging experiment. We are imaging GFP-tagged mitochondria and staining with MitoTracker Red and DAPI in live HeLa cells on a Zeiss LSM 880.",
+  "domain": "imaging",
+  "grader": "controls_grader",
+  "gold": {
+    "required_controls": [
+      "Background ROI measurement",
+      "Flat-field correction reference",
+      "Positive control sample",
+      "Negative control sample",
+      "Scale bar calibration"
+    ],
+    "optional_controls": [
+      "Photobleaching control",
+      "Biological replicates",
+      "Technical replicates",
+      "Randomization"
+    ]
+  }
+}

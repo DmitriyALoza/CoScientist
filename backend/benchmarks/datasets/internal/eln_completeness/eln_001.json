@@ -1,0 +1,13 @@
+{
+  "id": "eln_001",
+  "prompt": "Generate an ELN entry for a flow cytometry experiment to characterize T-cell activation markers. We stimulated PBMCs from Donor A (passage 0) with 5 µg/mL anti-CD3 (BioLegend 317302, lot B12345) and 2 µg/mL anti-CD28 (BioLegend 302902, lot C67890) for 48 hours at 37°C/5% CO2 in RPMI + 10% FBS. We used 1×10^6 cells/mL density on BD FACSCanto II. Antibody panel: CD69-PE (BioLegend 310906, lot D11111) and CD25-APC (BioLegend 302610, lot E22222). Hypothesis: >70% CD4+ T cells will upregulate CD69 and CD25. Note: anti-CD28 lot was substituted (E22223 → C67890) due to stock depletion — same vendor/clone, validated lot, low impact.",
+  "domain": "flow_cytometry",
+  "grader": "eln_grader",
+  "gold": {
+    "required_sections": ["objective", "hypothesis", "samples", "reagents", "parameters", "controls", "deviations", "results", "citations"],
+    "required_reagent_fields": ["vendor", "catalog", "lot", "concentration"],
+    "expected_controls": ["Unstained", "Isotype", "Unstimulated", "Positive"],
+    "deviation_must_mention_impact": true,
+    "min_score": 60
+  }
+}

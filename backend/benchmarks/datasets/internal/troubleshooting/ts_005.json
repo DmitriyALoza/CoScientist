@@ -1,0 +1,19 @@
+{
+  "id": "ts_005",
+  "prompt": "My cell viability (MTT) assay is giving me negative dose-response — the cells treated with high drug concentrations appear MORE viable than untreated cells. The drug is a kinase inhibitor dissolved in DMSO. All concentrations use 0.1% final DMSO. What could explain a paradoxical increase in MTT signal at high drug concentrations?",
+  "domain": "cell_culture",
+  "grader": "llm_judge",
+  "gold": {
+    "expected_root_causes": [
+      "Drug directly reduces MTT (false positive absorbance)",
+      "Drug-induced cell proliferation at sub-toxic doses (hormesis)",
+      "MTT crystal precipitation at high drug concentration",
+      "Drug interfering with mitochondrial metabolism measurement",
+      "Wrong wavelength for absorbance reading",
+      "Drug colored/chromogenic at high concentrations"
+    ],
+    "must_mention_controls": true,
+    "must_rank_hypotheses": true,
+    "must_suggest_next_steps": true
+  }
+}

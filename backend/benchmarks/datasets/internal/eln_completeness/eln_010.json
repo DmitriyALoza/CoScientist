@@ -1,0 +1,11 @@
+{
+  "id": "eln_010",
+  "prompt": "Write an ELN for a ChIP-seq experiment to map H3K27ac enhancer marks. Cell line: K562 (ATCC CCL-243, passage 10). Cross-linking: 1% formaldehyde, 10 min at RT, quenched with 125 mM glycine. Chromatin sonication: Bioruptor Pico (Diagenode), 15 cycles 30s on/30s off, target fragment size 200-500 bp. IP antibody: anti-H3K27ac (Abcam ab4729, lot GR3237051-1, 5 µg/IP). Protein A/G magnetic beads (ThermoFisher 26162). IgG control: rabbit IgG (Abcam ab172730). Library prep: NEBNext Ultra II DNA Library Prep (NEB E7645L, lot 10117024). Sequencing: NextSeq 500, 75 bp single-end, ~30M reads target per sample. Hypothesis: H3K27ac signal at known active enhancers will exceed input by >5-fold.",
+  "domain": "genomics",
+  "grader": "eln_grader",
+  "gold": {
+    "required_sections": ["objective", "hypothesis", "samples", "reagents", "parameters", "controls", "deviations", "results", "citations"],
+    "required_reagent_fields": ["vendor", "catalog", "lot", "concentration"],
+    "min_score": 60
+  }
+}

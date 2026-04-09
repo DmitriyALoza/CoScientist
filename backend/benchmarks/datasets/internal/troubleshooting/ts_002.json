@@ -1,0 +1,19 @@
+{
+  "id": "ts_002",
+  "prompt": "My flow cytometry data shows extremely high background in the FITC channel even in my unstained control. The cells look healthy by FSC/SSC scatter. This is a surface staining of CD4-FITC on PBMCs. All other channels (PE, APC) look fine. What is causing this and how do I fix it?",
+  "domain": "flow_cytometry",
+  "grader": "llm_judge",
+  "gold": {
+    "expected_root_causes": [
+      "Autofluorescence from cells (high in monocytes)",
+      "FITC antibody non-specifically binding",
+      "Fc receptor binding (need Fc block)",
+      "Dead cells with non-specific binding",
+      "FITC photobleaching or degradation",
+      "Compensation matrix error"
+    ],
+    "must_mention_controls": true,
+    "must_rank_hypotheses": true,
+    "must_suggest_next_steps": true
+  }
+}

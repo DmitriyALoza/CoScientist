@@ -1,0 +1,12 @@
+{
+  "id": "eln_002",
+  "prompt": "Write a complete ELN entry for an IHC experiment. We performed immunohistochemistry on FFPE colon cancer sections to detect Ki67 (proliferation marker). Primary antibody: anti-Ki67 rabbit monoclonal (Abcam ab16667, lot GR3256900-1, 1:200 dilution). Secondary: HRP-conjugated goat anti-rabbit (Jackson ImmunoResearch 111-035-144, lot 142565). Antigen retrieval: citrate buffer pH 6.0, 95°C for 20 min. Detection: DAB chromogen, hematoxylin counterstain. Tissue: FFPE blocks from surgical resection (patient cohort 2024-IHC, blocks processed 2026-02-10). Observed strong nuclear Ki67 staining in ~40% of tumor cells.",
+  "domain": "ihc",
+  "grader": "eln_grader",
+  "gold": {
+    "required_sections": ["objective", "hypothesis", "samples", "reagents", "parameters", "controls", "deviations", "results", "citations"],
+    "required_reagent_fields": ["vendor", "catalog", "lot", "concentration"],
+    "expected_controls": ["Primary omission", "Isotype", "Positive tissue", "Secondary-only"],
+    "min_score": 60
+  }
+}

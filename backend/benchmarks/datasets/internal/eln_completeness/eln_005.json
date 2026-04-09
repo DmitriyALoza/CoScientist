@@ -1,0 +1,11 @@
+{
+  "id": "eln_005",
+  "prompt": "Generate an ELN for a CRISPR knockout experiment. We knocked out the BRCA1 gene in MCF7 cells (ATCC HTB-22, passage 15) using CRISPR-Cas9. Guide RNA targeting exon 11 (sequence: GCAAGTGTGACGTACAAGCT, Synthego, lot 2024-SG-1). Cas9 protein: Alt-R S.p. Cas9 (IDT 1081058, lot 0000593836). Transfection: Lipofectamine CRISPRMAX (ThermoFisher CMAX00001, lot 2401045). Delivery: RNP complex, 48h post-transfection selection with puromycin 2 µg/mL. Editing efficiency validated by Sanger sequencing (EditR analysis). Objective: generate BRCA1 KO model for DNA damage response studies. Observed 78% indel frequency by Sanger.",
+  "domain": "cell_culture",
+  "grader": "eln_grader",
+  "gold": {
+    "required_sections": ["objective", "hypothesis", "samples", "reagents", "parameters", "controls", "deviations", "results", "citations"],
+    "required_reagent_fields": ["vendor", "catalog", "lot", "concentration"],
+    "min_score": 60
+  }
+}

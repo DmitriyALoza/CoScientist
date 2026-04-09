@@ -1,0 +1,141 @@
+name: coscientist
+
+services:
+
+  # ─────────────────────────────────────────────────────────────
+  # postgres — relational store (session checkpointing, future auth)
+  # ─────────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: coscientist
+      POSTGRES_PASSWORD: coscientist
+      POSTGRES_DB: coscientist
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U coscientist -d coscientist"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  # ─────────────────────────────────────────────────────────────
+  # qdrant — vector database for RAG / knowledge base
+  # ─────────────────────────────────────────────────────────────
+  qdrant:
+    image: qdrant/qdrant:latest
+    ports:
+      - "6333:6333"   # REST API
+      - "6334:6334"   # gRPC
+    volumes:
+      - qdrant_data:/qdrant/storage
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:6333/healthz || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  # ─────────────────────────────────────────────────────────────
+  # minio — S3-compatible object store for artifacts and KB files
+  # ─────────────────────────────────────────────────────────────
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"   # S3 API
+      - "9001:9001"   # Web console  →  http://localhost:9001
+    environment:
+      MINIO_ROOT_USER: coscientist
+      MINIO_ROOT_PASSWORD: coscientist
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "mc ready local 2>/dev/null || curl -sf http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  # Creates the default bucket on first boot, then exits
+  minio-init:
+    image: minio/mc:latest
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+      mc alias set local http://minio:9000 coscientist coscientist &&
+      mc mb --ignore-existing local/eln-kb &&
+      echo 'Bucket ready.'
+      "
+    restart: "no"
+
+  # ─────────────────────────────────────────────────────────────
+  # backend — FastAPI + LangGraph agent system
+  # ─────────────────────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+      # Infra overrides (take precedence over .env)
+      QDRANT_URL: http://qdrant:6333
+      STORAGE_BACKEND: s3
+      S3_ENDPOINT_URL: http://minio:9000
+      S3_BUCKET: eln-kb
+      S3_ACCESS_KEY_ID: coscientist
+      S3_SECRET_ACCESS_KEY: coscientist
+      DATABASE_URL: postgresql://coscientist:coscientist@postgres:5432/coscientist
+    depends_on:
+      postgres:
+        condition: service_healthy
+      qdrant:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+      minio-init:
+        condition: service_completed_successfully
+    volumes:
+      - backend_workspaces:/app/workspaces
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8000/api/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  # ─────────────────────────────────────────────────────────────
+  # frontend — Next.js 16 / React 19
+  # NEXT_PUBLIC_API_URL must point to where YOUR BROWSER reaches
+  # the backend — for local dev that is localhost:8000.
+  # ─────────────────────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        # Baked into the Next.js bundle at build time
+        NEXT_PUBLIC_API_URL: http://localhost:8000
+    ports:
+      - "3000:3000"
+    environment:
+      # Used by SSR (server-side fetches inside the container)
+      INTERNAL_API_URL: http://backend:8000
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  qdrant_data:
+  minio_data:
+  backend_workspaces:

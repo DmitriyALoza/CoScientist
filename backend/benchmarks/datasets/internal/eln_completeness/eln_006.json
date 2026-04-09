@@ -1,0 +1,11 @@
+{
+  "id": "eln_006",
+  "prompt": "Write an ELN entry for a confocal microscopy experiment. We imaged mitochondrial morphology in HeLa cells treated with CCCP (mitochondrial uncoupler) to induce fission. Cells plated on glass-bottom dishes (MatTek P35G-1.5-14-C). Treatment: 10 µM CCCP (Sigma-Aldrich C2759, lot SLBT2124) for 2 hours vs vehicle (0.1% DMSO). Staining: MitoTracker Red CMXRos (ThermoFisher M7512, lot 2342506, 200 nM, 30 min) and DAPI (1 µg/mL). Imaging: Zeiss LSM 880 confocal, 63× oil objective, 0.2 µm z-step. Images processed in Fiji (z-projection, background subtraction). Hypothesis: CCCP treatment will cause mitochondrial fragmentation (reduced aspect ratio < 2).",
+  "domain": "imaging",
+  "grader": "eln_grader",
+  "gold": {
+    "required_sections": ["objective", "hypothesis", "samples", "reagents", "parameters", "controls", "deviations", "results", "citations"],
+    "required_reagent_fields": ["vendor", "catalog", "lot", "concentration"],
+    "min_score": 60
+  }
+}

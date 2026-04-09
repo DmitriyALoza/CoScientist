@@ -1,0 +1,12 @@
+{
+  "id": "eln_004",
+  "prompt": "Document a western blot experiment in ELN format. We investigated STAT3 phosphorylation (pSTAT3-Y705) in response to IL-6 treatment. Cell line: A549 lung cancer cells (ATCC CCL-185, passage 8). Treatment: 20 ng/mL IL-6 (PeproTech 200-06, lot 0117A25) for 30 min. Lysis: RIPA buffer with protease/phosphatase inhibitors. SDS-PAGE: 10% gel, 20 µg protein per lane. Primary antibodies: anti-pSTAT3-Y705 (Cell Signaling 9131S, lot 26, 1:1000) and anti-total STAT3 (Cell Signaling 9139S, lot 15, 1:1000). Secondary: HRP-anti-rabbit (CST 7074S, 1:3000). Loading control: anti-β-actin (Sigma A5441, 1:5000). Detection: ECL. Expected result: strong pSTAT3 band at ~92 kDa in IL-6 treated lanes.",
+  "domain": "western_blot",
+  "grader": "eln_grader",
+  "gold": {
+    "required_sections": ["objective", "hypothesis", "samples", "reagents", "parameters", "controls", "deviations", "results", "citations"],
+    "required_reagent_fields": ["vendor", "catalog", "lot", "concentration"],
+    "expected_controls": ["Untreated negative", "Loading control beta-actin", "Total STAT3"],
+    "min_score": 60
+  }
+}

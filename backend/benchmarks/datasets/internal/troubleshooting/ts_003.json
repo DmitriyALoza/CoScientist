@@ -1,0 +1,18 @@
+{
+  "id": "ts_003",
+  "prompt": "My IHC staining for Ki67 shows strong background throughout the entire tissue section, even in areas where there should be no staining. The primary antibody omission control shows no background. I used TSA amplification for the detection. What are the most likely causes?",
+  "domain": "ihc",
+  "grader": "llm_judge",
+  "gold": {
+    "expected_root_causes": [
+      "Insufficient blocking of endogenous peroxidase",
+      "TSA over-amplification causing signal diffusion",
+      "Non-specific binding of secondary antibody",
+      "Endogenous biotin interference",
+      "Primary antibody concentration too high"
+    ],
+    "must_mention_controls": true,
+    "must_rank_hypotheses": true,
+    "must_suggest_next_steps": true
+  }
+}

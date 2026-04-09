@@ -1,0 +1,20 @@
+{
+  "id": "ctrl_005",
+  "prompt": "What controls are required for a western blot experiment to detect STAT3 phosphorylation (pY705) in cytokine-treated cancer cell lines?",
+  "domain": "western_blot",
+  "grader": "controls_grader",
+  "gold": {
+    "required_controls": [
+      "Untreated negative control",
+      "Loading control",
+      "Total protein control",
+      "Positive control"
+    ],
+    "optional_controls": [
+      "Secondary-only control",
+      "Biological replicates",
+      "Technical replicates",
+      "Blocking peptide control"
+    ]
+  }
+}

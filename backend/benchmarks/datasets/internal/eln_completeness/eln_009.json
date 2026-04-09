@@ -1,0 +1,11 @@
+{
+  "id": "eln_009",
+  "prompt": "Generate an ELN entry for an ELISA experiment. We measured secreted IL-6 protein levels in LPS-stimulated THP-1 macrophages. Cells differentiated with 100 nM PMA (Sigma P8139, lot SLCD6310) for 48h, rested 24h. Stimulation: 100 ng/mL LPS (E. coli O111:B4, Sigma L4391, lot 0000073488) for 24h. Supernatants harvested and frozen at -80°C. ELISA: Human IL-6 DuoSet (R&D Systems DY206-05, lot P260878) following manufacturer protocol. Standard curve: 7-point, 2-fold serial dilution from 600 pg/mL. Samples measured at 1:10 and 1:100 dilution. Plate reader: Spectramax i3x at 450 nm minus 570 nm correction. Hypothesis: LPS will induce >500 pg/mL IL-6.",
+  "domain": "immunology",
+  "grader": "eln_grader",
+  "gold": {
+    "required_sections": ["objective", "hypothesis", "samples", "reagents", "parameters", "controls", "deviations", "results", "citations"],
+    "required_reagent_fields": ["vendor", "catalog", "lot", "concentration"],
+    "min_score": 60
+  }
+}

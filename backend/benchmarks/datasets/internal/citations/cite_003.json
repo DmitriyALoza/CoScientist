@@ -1,0 +1,11 @@
+{
+  "id": "cite_003",
+  "prompt": "What does the literature say about the role of STAT3 in IL-6 signalling in cancer? Provide citations.",
+  "domain": "cell_signalling",
+  "grader": "citation_grader",
+  "gold": {
+    "min_citations": 2,
+    "required_fields_per_citation": ["title", "authors", "year", "excerpt", "source_id"],
+    "topic_keywords": ["STAT3", "IL-6", "JAK", "cancer", "signalling"]
+  }
+}

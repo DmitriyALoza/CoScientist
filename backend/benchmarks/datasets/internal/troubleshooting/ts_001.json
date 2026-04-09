@@ -1,0 +1,18 @@
+{
+  "id": "ts_001",
+  "prompt": "My western blot shows no bands at all in any lane, including the positive control. I used a rabbit anti-p53 primary antibody (Cell Signaling 2527S) at 1:1000 dilution, incubated overnight at 4°C. Secondary was HRP-anti-rabbit at 1:3000 for 1 hour at RT. Detection by ECL. The gel ran fine and transfer looked complete on Ponceau staining. What went wrong?",
+  "domain": "western_blot",
+  "grader": "llm_judge",
+  "gold": {
+    "expected_root_causes": [
+      "ECL reagent expired or improperly mixed",
+      "Blocking too stringent (phospho-protein blocked by BSA)",
+      "Secondary antibody inactive or wrong species",
+      "Film exposure time too short",
+      "HRP inactivated by sodium azide in blocking buffer"
+    ],
+    "must_mention_controls": true,
+    "must_rank_hypotheses": true,
+    "must_suggest_next_steps": true
+  }
+}

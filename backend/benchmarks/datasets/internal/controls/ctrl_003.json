@@ -1,0 +1,21 @@
+{
+  "id": "ctrl_003",
+  "prompt": "List all required controls for a drug cytotoxicity assay in cell culture. We are testing 8 concentrations of a novel kinase inhibitor dissolved in DMSO on HCT116 colon cancer cells using a CellTiter-Glo readout.",
+  "domain": "cell_culture",
+  "grader": "controls_grader",
+  "gold": {
+    "required_controls": [
+      "Sterility check",
+      "Mycoplasma testing",
+      "Passage number recorded",
+      "Vehicle control",
+      "Untreated control"
+    ],
+    "optional_controls": [
+      "Positive control",
+      "Biological replicates",
+      "Technical replicates",
+      "Randomization"
+    ]
+  }
+}

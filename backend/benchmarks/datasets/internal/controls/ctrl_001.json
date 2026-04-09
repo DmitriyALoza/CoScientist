@@ -1,0 +1,22 @@
+{
+  "id": "ctrl_001",
+  "prompt": "Generate a controls checklist for a multi-parameter flow cytometry activation assay. We are staining PBMCs with CD3-BV421, CD4-FITC, CD8-PE, CD69-APC, CD25-PE-Cy7, CD127-BV711, and a LIVE/DEAD viability dye. Cells were stimulated with anti-CD3/CD28 beads for 48 hours.",
+  "domain": "flow_cytometry",
+  "grader": "controls_grader",
+  "gold": {
+    "required_controls": [
+      "Unstained control",
+      "Single-color compensation controls",
+      "FMO controls",
+      "Isotype controls",
+      "Viability dye control",
+      "Unstimulated control",
+      "Positive control"
+    ],
+    "optional_controls": [
+      "Fluorescence minus one",
+      "Biological replicates",
+      "Technical replicates"
+    ]
+  }
+}
