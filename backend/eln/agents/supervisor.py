@@ -58,6 +58,10 @@ You coordinate a team of specialist agents. Your job is ROUTING — not answerin
 - **structure_analyst**: fetches AlphaFold structures, interprets pLDDT confidence and PAE
   domain architecture, and submits novel sequences via ColabFold (premium).
   Use for any protein structure, folding, or domain question.
+- **target_intelligence**: cross-species protein comparison, PTM conservation analysis,
+  and antibody/clone availability lookup. Use when the user asks to compare a target
+  across species, assess PTM conservation, evaluate translational risk, or find antibodies
+  with multi-species reactivity.
 
 ## Routing rules by mode
 
@@ -72,6 +76,7 @@ You coordinate a team of specialist agents. Your job is ROUTING — not answerin
   - Chart/graph image uploaded → image_analyst THEN data_analyst (if stats requested)
   - R analysis / DESeq2 / limma / survival → data_analyst
   - AlphaFold / protein structure / pLDDT / PAE / fold this sequence → structure_analyst
+  - "Compare [target] across species" / PTM conservation / antibody availability → target_intelligence
   - "Debate this hypothesis" → debate_manager
   - "Plan an experiment" / "record result" → experiment_manager
   - Images attached (pending_images non-empty) → image_analyst **immediately**
@@ -422,6 +427,42 @@ def build_supervisor_graph(
     structure_analyst = build_structure_analyst(model=main_model, tools=structure_tools)
 
     # ------------------------------------------------------------------
+    # Target Intelligence tools (Cross-Species Target Intelligence feature)
+    # ------------------------------------------------------------------
+
+    target_intelligence_tools = []
+    if workspace_path is not None:
+        from eln.agents.target_intelligence import build_target_intelligence
+        from eln.tools.target_intelligence_tools import (
+            align_sequences,
+            get_orthologs,
+            get_ptm_annotations,
+            resolve_target,
+            save_target_analysis,
+            search_antibodies,
+            set_target_analysis_store,
+        )
+        from eln.workspace.target_analysis_store import TargetAnalysisStore
+
+        ta_store = TargetAnalysisStore(workspace_path / "target_analyses")
+        set_target_analysis_store(ta_store)
+        target_intelligence_tools = [
+            resolve_target,
+            get_orthologs,
+            align_sequences,
+            get_ptm_annotations,
+            search_antibodies,
+            save_target_analysis,
+        ]
+
+    from eln.agents.target_intelligence import build_target_intelligence
+
+    target_intelligence_agent = build_target_intelligence(
+        model=main_model,
+        tools=target_intelligence_tools,
+    )
+
+    # ------------------------------------------------------------------
     # Build supervisor graph
     # ------------------------------------------------------------------
 
@@ -439,6 +480,7 @@ def build_supervisor_graph(
         image_analyst,
         data_analyst,
         structure_analyst,
+        target_intelligence_agent,
     ]
 
     workflow = create_supervisor(

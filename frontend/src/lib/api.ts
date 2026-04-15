@@ -1,4 +1,4 @@
-import type { DashboardMetrics, HypothesisSet, ExperimentLoop, RunIndex, KBStats } from "./types";
+import type { DashboardMetrics, HypothesisSet, ExperimentLoop, RunIndex, KBStats, TargetAnalysisRun } from "./types";
 
 const API_BASE =
   typeof window === "undefined"
@@ -59,6 +59,23 @@ export const api = {
       get<KBStats>("/api/kb/stats", { user_id: userId }),
     search: (query: string, collection = "papers", userId = "default") =>
       post<unknown[]>("/api/kb/search", { query, collection, user_id: userId }),
+  },
+
+  targetAnalysis: {
+    run: (body: {
+      target: string;
+      reference_species?: string;
+      comparison_species?: string[];
+      ptm_types?: string[];
+      tissue_filter?: string;
+      user_id?: string;
+    }) => post<TargetAnalysisRun>("/api/target-analysis", body),
+
+    list: (userId = "default", limit = 20) =>
+      get<TargetAnalysisRun[]>("/api/target-analyses", { user_id: userId, limit: String(limit) }),
+
+    get: (analysisId: string, userId = "default") =>
+      get<TargetAnalysisRun>(`/api/target-analyses/${analysisId}`, { user_id: userId }),
   },
 
   wsUrl: () => (API_BASE.replace(/^http/, "ws") + "/api/chat"),

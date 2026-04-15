@@ -48,3 +48,6 @@ class AppState(AgentState):
 
     # Accumulated image analysis records
     image_analyses: Annotated[list[dict], operator.add]
+
+    # Target analysis runs from target_intelligence agent
+    target_analyses: Annotated[list[dict], operator.add]

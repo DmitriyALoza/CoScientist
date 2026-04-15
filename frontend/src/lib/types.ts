@@ -98,6 +98,72 @@ export interface ActivityItem {
   ts: string;
 }
 
+// ── Cross-Species Target Intelligence ─────────────────────────
+export interface ResolvedTarget {
+  gene_symbol: string;
+  protein_name: string;
+  uniprot_id: string;
+  organism: string;
+  synonyms: string[];
+}
+
+export interface Ortholog {
+  species: string;
+  uniprot_id: string;
+  gene_symbol: string;
+  percent_identity: number;
+  sequence_length: number;
+  mapping_confidence: "high" | "moderate" | "low";
+}
+
+export type PTMStatus = "conserved" | "shifted" | "residue_changed" | "no_evidence";
+
+export interface PTMSite {
+  residue: string;
+  ptm_type: string;
+  position: number;
+  species_status: Record<string, PTMStatus>;
+  evidence_source: string;
+}
+
+export interface AntibodyRecord {
+  ab_id: string;
+  clone_name: string | null;
+  vendor: string;
+  catalog_number: string | null;
+  host_species: string | null;
+  reactivity_species: string[];
+  applications: string[];
+  epitope_info: string | null;
+  validation_source: string | null;
+}
+
+export interface ConservationSummary {
+  ortholog_conservation: "High" | "Moderate" | "Low" | "Unclear";
+  ptm_conservation: "High" | "Moderate" | "Unclear";
+  antibody_coverage: "Strong" | "Partial" | "Limited";
+  translational_risk: "Low" | "Moderate" | "High" | "Unclear";
+}
+
+export interface TargetAnalysisRun {
+  analysis_id: string;
+  user_id: string;
+  target_input: string;
+  comparison_species: string[];
+  ptm_filter: string[];
+  tissue_filter: string | null;
+  status: "pending" | "running" | "complete" | "error";
+  resolved_target: ResolvedTarget | null;
+  orthologs: Ortholog[];
+  ptm_sites: PTMSite[];
+  antibodies: AntibodyRecord[];
+  conservation_summary: ConservationSummary | null;
+  ai_interpretation: string | null;
+  warnings: string[];
+  created_at: string;
+  completed_at: string | null;
+}
+
 // Chat
 export type ChatMode = "normal" | "validation" | "protocol";
 

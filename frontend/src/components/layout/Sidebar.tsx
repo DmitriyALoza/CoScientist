@@ -7,6 +7,7 @@ import {
   FileText,
   Lightbulb,
   FlaskConical,
+  Target,
   BookOpen,
   Settings,
   Lock,
@@ -25,6 +26,7 @@ const mainNav: NavItem[] = [
   { label: "Documents", href: "/documents", icon: <FileText size={16} /> },
   { label: "Hypotheses", href: "/hypotheses", icon: <Lightbulb size={16} /> },
   { label: "Experiments", href: "/experiments", icon: <FlaskConical size={16} /> },
+  { label: "Target Analysis", href: "/target-analysis", icon: <Target size={16} /> },
 ];
 
 const secondaryNav: NavItem[] = [

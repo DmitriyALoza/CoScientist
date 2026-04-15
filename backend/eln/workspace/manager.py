@@ -34,6 +34,7 @@ class WorkspaceManager:
             self.root / "debates",
             self.root / "experiments",
             self.root / "experiments" / "loops",
+            self.root / "target_analyses",
         ]
         for d in dirs:
             d.mkdir(parents=True, exist_ok=True)
@@ -112,3 +113,6 @@ class WorkspaceManager:
 
     def experiments_path(self) -> Path:
         return self.root / "experiments"
+
+    def target_analyses_path(self) -> Path:
+        return self.root / "target_analyses"

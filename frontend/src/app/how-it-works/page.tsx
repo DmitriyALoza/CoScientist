@@ -20,6 +20,7 @@ const AGENTS: Agent[] = [
   { name: "structure_analyst", category: "Innovation", description: "Analyzes molecular structures and predicts binding interactions." },
   { name: "data_analyst", category: "Innovation", description: "Processes experimental datasets and generates statistical summaries." },
   { name: "image_analyst", category: "Innovation", description: "Interprets microscopy, flow cytometry, and gel images with AI vision." },
+  { name: "target_intelligence", category: "Innovation", description: "Compares target proteins across preclinical species — mapping orthologs, PTM conservation, and antibody availability for translational risk assessment." },
 ];
 
 const FEATURES = [
@@ -57,6 +58,11 @@ const FEATURES = [
     emoji: "🧪",
     title: "Experiment Manager",
     description: "Plans iterative experiment loops, tracks results, extracts learnings, and converges toward validated outcomes automatically.",
+  },
+  {
+    emoji: "🎯",
+    title: "Target Analysis",
+    description: "Compares a human protein target across toxicology-relevant preclinical species — fetching orthologs, aligning sequences, mapping PTM conservation, and searching antibody databases, with an AI-generated translational risk summary.",
   },
   {
     emoji: "🔒",

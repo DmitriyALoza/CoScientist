@@ -32,6 +32,7 @@ The two services are independently deployable. Each has its own `Dockerfile` and
 | `data_analyst` | Statistical analysis and plotting |
 | `image_analyst` | Lab image classification (western blots, gels, microscopy) |
 | `structure_analyst` | AlphaFold / ColabFold protein folding (premium) |
+| `target_intelligence` | Cross-species ortholog comparison, PTM conservation mapping, antibody availability lookup |
 
 Chat mode determines routing:
 
@@ -49,6 +50,7 @@ Chat mode determines routing:
 | `/hypotheses` | Hypothesis sets with score breakdowns and debate history |
 | `/experiments` | Closed-loop experiment tracking with iteration progress |
 | `/how-it-works` | Architecture overview and agent explainer |
+| `/target-analysis` | Cross-species protein comparison — orthologs, PTM conservation, antibody availability |
 | `/settings` | LLM provider, model, observability, and workspace config |
 
 ## API Endpoints
@@ -67,6 +69,9 @@ GET  /api/kb/stats
 POST /api/kb/ingest
 POST /api/kb/search
 WS   /api/chat
+POST /api/target-analysis
+GET  /api/target-analyses
+GET  /api/target-analyses/{id}
 ```
 
 ## Infrastructure
@@ -197,6 +202,7 @@ The chat endpoint at `ws://localhost:8000/api/chat` uses a simple streaming prot
 - Qdrant (vector search)
 - Anthropic / OpenAI / Google Gemini / Ollama (LLM providers)
 - sentence-transformers (local embeddings)
+- biopython (pairwise sequence alignment with BLOSUM62)
 - boto3 + MinIO (S3-compatible object storage)
 - PostgreSQL (via SQLAlchemy, for checkpointing)
 - OpenTelemetry (optional tracing)

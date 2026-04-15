@@ -47,3 +47,6 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+
+# ── Internal docs (not for public repo) ───────────────────────
+Feature_PRD/

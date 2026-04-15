@@ -16,7 +16,7 @@ from typing import AsyncGenerator
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from routes import chat, documents, experiments, hypotheses, metrics, workspace
+from routes import chat, documents, experiments, hypotheses, metrics, target_analysis, workspace
 
 
 @asynccontextmanager
@@ -49,6 +49,7 @@ app.include_router(hypotheses.router,  prefix="/api")
 app.include_router(experiments.router, prefix="/api")
 app.include_router(documents.router,   prefix="/api")
 app.include_router(metrics.router,     prefix="/api")
+app.include_router(target_analysis.router, prefix="/api")
 
 
 @app.get("/api/health")
