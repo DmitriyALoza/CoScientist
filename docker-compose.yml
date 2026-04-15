@@ -12,7 +12,7 @@ services:
       POSTGRES_PASSWORD: coscientist
       POSTGRES_DB: coscientist
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -32,11 +32,6 @@ services:
       - "6334:6334"   # gRPC
     volumes:
       - qdrant_data:/qdrant/storage
-    healthcheck:
-      test: ["CMD-SHELL", "curl -sf http://localhost:6333/healthz || exit 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
     restart: unless-stopped
 
   # ─────────────────────────────────────────────────────────────
@@ -98,7 +93,7 @@ services:
       postgres:
         condition: service_healthy
       qdrant:
-        condition: service_healthy
+        condition: service_started
       minio:
         condition: service_healthy
       minio-init:
@@ -106,7 +101,7 @@ services:
     volumes:
       - backend_workspaces:/app/workspaces
     healthcheck:
-      test: ["CMD-SHELL", "curl -sf http://localhost:8000/api/health || exit 1"]
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')\" 2>/dev/null || exit 1"]
       interval: 15s
       timeout: 5s
       retries: 10

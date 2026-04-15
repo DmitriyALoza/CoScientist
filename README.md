@@ -2,6 +2,12 @@
 
 An autonomous AI co-scientist for wet-lab biology. CoScientist wraps a multi-agent LangGraph system — literature scout, hypothesis generator, SOP adapter, experiment manager, and more — behind a production-grade web interface built with Next.js and FastAPI.
 
+## Screenshots
+
+![Dashboard](images/dashboard.png)
+
+![How It Works](images/how-it-works.png)
+
 ## Architecture
 
 ```
