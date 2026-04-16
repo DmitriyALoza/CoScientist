@@ -8,6 +8,23 @@ import { AssayFilterPanel } from "./AssayFilterPanel";
 import { MapSearchControls } from "./MapSearchControls";
 import { LabDetailPanel } from "./LabDetailPanel";
 
+// Standard dark map styles — no Map ID required
+const DARK_MAP_STYLES: google.maps.MapTypeStyle[] = [
+  { elementType: "geometry", stylers: [{ color: "#212121" }] },
+  { elementType: "labels.text.stroke", stylers: [{ color: "#212121" }] },
+  { elementType: "labels.text.fill", stylers: [{ color: "#757575" }] },
+  { featureType: "road", elementType: "geometry", stylers: [{ color: "#2c2c2c" }] },
+  { featureType: "road", elementType: "labels.text.fill", stylers: [{ color: "#8a8a8a" }] },
+  { featureType: "water", elementType: "geometry", stylers: [{ color: "#000000" }] },
+  { featureType: "water", elementType: "labels.text.fill", stylers: [{ color: "#3d3d3d" }] },
+  { featureType: "poi", elementType: "geometry", stylers: [{ color: "#2d2d2d" }] },
+  { featureType: "poi.park", elementType: "geometry", stylers: [{ color: "#1a2a1a" }] },
+  { featureType: "transit", elementType: "geometry", stylers: [{ color: "#2f3948" }] },
+  { featureType: "administrative", elementType: "geometry", stylers: [{ color: "#757575" }] },
+  { featureType: "administrative.country", elementType: "labels.text.fill", stylers: [{ color: "#9e9e9e" }] },
+  { featureType: "administrative.locality", elementType: "labels.text.fill", stylers: [{ color: "#bdbdbd" }] },
+];
+
 // Inner component — must be rendered inside <APIProvider> to use useMap()
 function LabFinderInner() {
   const map = useMap();
@@ -153,10 +170,10 @@ function LabFinderInner() {
           defaultZoom={2}
           defaultCenter={{ lat: 20, lng: 0 }}
           {...(userLocation ? { center: userLocation, zoom: 12 } : {})}
-          colorScheme="DARK"
           gestureHandling="greedy"
           disableDefaultUI={false}
           style={{ width: "100%", height: "100%" }}
+          styles={DARK_MAP_STYLES}
         >
           {/* User location marker */}
           {userLocation && (

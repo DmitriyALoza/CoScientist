@@ -224,6 +224,3 @@ The following capabilities are available as add-ons and are disabled by default:
 
 Contact us to enable premium features for your deployment.
 
-## License
-
-MIT
