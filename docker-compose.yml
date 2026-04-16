@@ -119,6 +119,7 @@ services:
       args:
         # Baked into the Next.js bundle at build time
         NEXT_PUBLIC_API_URL: http://localhost:8000
+        NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: ${NEXT_PUBLIC_GOOGLE_MAPS_API_KEY:-}
     ports:
       - "3000:3000"
     environment:

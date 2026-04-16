@@ -8,6 +8,7 @@ import {
   Lightbulb,
   FlaskConical,
   Target,
+  MapPin,
   BookOpen,
   Settings,
   Lock,
@@ -27,6 +28,7 @@ const mainNav: NavItem[] = [
   { label: "Hypotheses", href: "/hypotheses", icon: <Lightbulb size={16} /> },
   { label: "Experiments", href: "/experiments", icon: <FlaskConical size={16} /> },
   { label: "Target Analysis", href: "/target-analysis", icon: <Target size={16} /> },
+  { label: "Lab Finder", href: "/lab-finder", icon: <MapPin size={16} /> },
 ];
 
 const secondaryNav: NavItem[] = [
