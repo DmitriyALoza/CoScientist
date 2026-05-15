@@ -145,6 +145,7 @@ def _make_supervisor_prompt(state: AppState):
 def build_supervisor_graph(
     main_model: BaseChatModel,
     supervisor_model: BaseChatModel | None = None,
+    reasoning_model: BaseChatModel | None = None,
     checkpointer: MemorySaver | None = None,
     kb_indexes_path: Path | None = None,
     run_path: Path | None = None,
@@ -156,9 +157,12 @@ def build_supervisor_graph(
     Build and compile the full supervisor + subagents graph.
 
     Args:
-        main_model: The full-capability model used by eln_scribe and troubleshooter.
-        supervisor_model: A lighter model used by the supervisor for routing.
+        main_model: STANDARD-tier model for most analytical agents.
+        supervisor_model: LITE-tier model for the supervisor and routing agents.
                           Defaults to main_model if not provided.
+        reasoning_model: PREMIUM-tier model for deep-reasoning agents
+                         (hypothesis_generator, debate_manager).
+                         Defaults to main_model if not provided.
         checkpointer: LangGraph checkpointer for state persistence across turns.
                       Defaults to an in-memory saver.
         kb_indexes_path: Path to the Qdrant indexes directory. If provided,
@@ -169,6 +173,7 @@ def build_supervisor_graph(
                         and experiments. Enables all innovation features.
     """
     router_model = supervisor_model or main_model
+    premium_model = reasoning_model or main_model
 
     # ------------------------------------------------------------------
     # RAG tools (search local KB)
@@ -315,7 +320,7 @@ def build_supervisor_graph(
 
         debate_store = DebateStore(workspace_path / "debates")
         set_debate_store(debate_store)
-        debate_graph = build_debate_graph(model=main_model)
+        debate_graph = build_debate_graph(model=premium_model)
         set_debate_graph(debate_graph)
         debate_tools = [start_debate, get_debate_status, load_debate_synthesis]
 
@@ -375,7 +380,7 @@ def build_supervisor_graph(
         tools=memory_tools,
     )
     hypothesis_generator = build_hypothesis_generator(
-        model=main_model,
+        model=premium_model,
         tools=hypothesis_tools + memory_tools[:1] + rag_tools[:2],  # recall + search
     )
     tool_executor = build_tool_executor(
@@ -383,7 +388,7 @@ def build_supervisor_graph(
         tools=executor_tools,
     )
     debate_manager = build_debate_manager(
-        model=main_model,
+        model=premium_model,
         tools=debate_tools,
     )
     experiment_manager = build_experiment_manager(

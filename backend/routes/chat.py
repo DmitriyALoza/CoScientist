@@ -16,15 +16,22 @@ router = APIRouter(tags=["chat"])
 _graph_cache: dict[str, Any] = {}
 
 
+def _default_reasoning_model(provider: str, fallback: str) -> str:
+    """Return the PREMIUM-tier default for this provider, or fallback if unknown."""
+    from eln.providers.registry import ModelTier, get_tier_model
+    return get_tier_model(provider, ModelTier.PREMIUM) or fallback
+
+
 def _get_graph(
     user_id: str,
     provider: str,
     model: str,
     supervisor_model: str,
+    reasoning_model: str,
     run_id: str | None,
 ) -> Any:
     """Build or retrieve a cached supervisor graph."""
-    cache_key = f"{user_id}:{provider}:{model}"
+    cache_key = f"{user_id}:{provider}:{model}:{reasoning_model}"
     if cache_key in _graph_cache:
         return _graph_cache[cache_key]
 
@@ -43,12 +50,19 @@ def _get_graph(
     except Exception:
         sup_llm = main_llm
 
+    try:
+        reasoning_prov = build_provider(provider, model=reasoning_model)
+        reasoning_llm = reasoning_prov.llm
+    except Exception:
+        reasoning_llm = main_llm
+
     wm = WorkspaceManager(user_id=user_id)
     run_path = (wm.root / "runs" / run_id) if run_id else None
 
     graph = build_supervisor_graph(
         main_model=main_llm,
         supervisor_model=sup_llm,
+        reasoning_model=reasoning_llm,
         checkpointer=MemorySaver(),
         kb_indexes_path=wm.indexes_path(),
         run_path=run_path,
@@ -78,6 +92,8 @@ async def chat_ws(ws: WebSocket) -> None:
             provider: str = msg.get("provider", "anthropic")
             model: str = msg.get("model", "claude-sonnet-4-6")
             supervisor_model: str = msg.get("supervisor_model", "claude-haiku-4-5-20251001")
+            # Optional explicit override; otherwise derive from the registry tier defaults
+            reasoning_model: str = msg.get("reasoning_model") or _default_reasoning_model(provider, model)
             docs: list[dict] = msg.get("docs", [])
 
             # Inject attached docs into the message
@@ -88,7 +104,7 @@ async def chat_ws(ws: WebSocket) -> None:
                 content = f"{content}\n\n---\n{doc_context}"
 
             try:
-                graph = _get_graph(user_id, provider, model, supervisor_model, run_id)
+                graph = _get_graph(user_id, provider, model, supervisor_model, reasoning_model, run_id)
             except Exception as e:
                 await ws.send_text(json.dumps({"type": "error", "message": str(e)}))
                 continue

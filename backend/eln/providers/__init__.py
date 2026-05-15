@@ -1,14 +1,16 @@
 from eln.providers.base import BaseProvider, LLMResponse
-from eln.providers.registry import MODEL_REGISTRY, ModelSpec, get_spec, list_specs
+from eln.providers.registry import MODEL_REGISTRY, ModelSpec, ModelTier, get_spec, get_tier_model, list_specs
 
 __all__ = [
     "BaseProvider",
     "LLMResponse",
     "MODEL_REGISTRY",
     "ModelSpec",
+    "ModelTier",
     "PROVIDERS",
     "build_provider",
     "get_spec",
+    "get_tier_model",
     "list_ollama_models",
     "list_specs",
 ]
