@@ -105,11 +105,14 @@ class OpenAIProvider(BaseProvider):
                     output_tokens=output_tokens,
                 )
 
+            from eln.providers.registry import get_spec
+            spec = get_spec("openai", self._model_name)
             return LLMResponse(
                 text=full_text,
                 tool_calls=tool_calls,
                 input_tokens=input_tokens,
                 output_tokens=output_tokens,
+                cost_usd=spec.cost_usd(input_tokens, output_tokens) if spec else None,
                 model=self._model_name,
                 provider="openai",
             )

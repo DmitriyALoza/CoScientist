@@ -107,6 +107,7 @@ class OllamaProvider(BaseProvider):
             tool_calls=tool_calls,
             input_tokens=0,
             output_tokens=0,
+            cost_usd=None,  # local model, no token cost
             model=self._model,
             provider="ollama",
         )

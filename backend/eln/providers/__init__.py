@@ -1,25 +1,33 @@
 from eln.providers.base import BaseProvider, LLMResponse
+from eln.providers.registry import MODEL_REGISTRY, ModelSpec, get_spec, list_specs
 
-__all__ = ["BaseProvider", "LLMResponse", "build_provider", "list_ollama_models"]
+__all__ = [
+    "BaseProvider",
+    "LLMResponse",
+    "MODEL_REGISTRY",
+    "ModelSpec",
+    "PROVIDERS",
+    "build_provider",
+    "get_spec",
+    "list_ollama_models",
+    "list_specs",
+]
 
-# Available providers and their default models
-PROVIDERS = {
-    "anthropic": {
-        "models": ["claude-opus-4-6", "claude-sonnet-4-6", "claude-haiku-4-5-20251001"],
-        "default": "claude-opus-4-6",
-    },
-    "openai": {
-        "models": ["gpt-4o", "gpt-4o-mini", "gpt-4.1", "o3-mini"],
-        "default": "gpt-4o",
-    },
-    "gemini": {
-        "models": ["gemini-2.5-pro", "gemini-2.5-flash"],
-        "default": "gemini-2.5-flash",
-    },
-    "ollama": {
-        "models": [],  # populated dynamically at runtime
-        "default": "llama3",
-    },
+# Derived from MODEL_REGISTRY — single source of truth for available models.
+# Ollama models are dynamic and appended at runtime via list_ollama_models().
+_PROVIDER_DEFAULTS = {
+    "anthropic": "claude-opus-4-6",
+    "openai": "gpt-4o",
+    "gemini": "gemini-2.5-flash",
+    "ollama": "llama3",
+}
+
+PROVIDERS: dict[str, dict] = {
+    provider: {
+        "models": [s.model_id for s in list_specs(provider)],
+        "default": _PROVIDER_DEFAULTS[provider],
+    }
+    for provider in _PROVIDER_DEFAULTS
 }
 
 
