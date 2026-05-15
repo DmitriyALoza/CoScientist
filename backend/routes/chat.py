@@ -116,7 +116,23 @@ async def chat_ws(ws: WebSocket) -> None:
                 "citations": [],
                 "tool_trace": [],
             }
-            config = {"configurable": {"thread_id": thread_id}}
+
+            from eln.config import settings as _settings
+            from eln.tracing.cost_callback import BudgetExceededError, CostCallbackHandler
+
+            cost_tracker = CostCallbackHandler(
+                provider=provider,
+                max_budget_usd=_settings.max_session_budget_usd,
+            )
+            callbacks = [cost_tracker]
+            if _settings.otel_enabled:
+                from eln.tracing.otel_callback import OTelCallbackHandler
+                callbacks.append(OTelCallbackHandler())
+
+            config = {
+                "configurable": {"thread_id": thread_id},
+                "callbacks": callbacks,
+            }
 
             last_agent: str | None = None
 
@@ -154,8 +170,11 @@ async def chat_ws(ws: WebSocket) -> None:
                     "type": "done",
                     "thread_id": thread_id,
                     "agent": last_agent,
+                    "usage": cost_tracker.summary,
                 }))
 
+            except BudgetExceededError as e:
+                await ws.send_text(json.dumps({"type": "error", "message": str(e)}))
             except Exception as e:
                 await ws.send_text(json.dumps({"type": "error", "message": str(e)}))
 

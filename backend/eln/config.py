@@ -56,6 +56,11 @@ class Settings(BaseSettings):
     # Free tier uses AlphaFold DB lookup (fetch_alphafold_structure) — instant, no flag needed
     colabfold_enabled: bool = False
 
+    # Cost tracking & budget control
+    # Set MAX_SESSION_BUDGET_USD=0.50 to stop a session after $0.50 of API spend.
+    # 0.0 means no limit.
+    max_session_budget_usd: float = 0.0
+
     # OpenTelemetry
     otel_enabled: bool = False
     otel_exporter: str = "otlp"  # "otlp" | "console"
